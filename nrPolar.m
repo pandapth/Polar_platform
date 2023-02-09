@@ -7,10 +7,10 @@
 clc;
 clear;
 % Parameters from the Task Description
-R = 0.2389; % Effective code rate (r), R*E > 30
-E = 180; % Rate matched block length (n), E <= 8192
-snrdB = -3.5:0.1:-3; % Signal-to-noise ratio, dB
-tx_max = 3; % Max number of retransmissions
+R = 0.36; % Effective code rate (r), R*E > 30
+E = 124; % Rate matched block length (n), E <= 8192
+snrdB = -0.4:0.1:0.; % Signal-to-noise ratio, dB
+tx_max = 1; % Max number of retransmissions
 
 % Dependent parameters
 K = floor(R*E); % % Message length in bits, including CRC
@@ -30,7 +30,6 @@ L = 8; % SCL decoding list size
 % Simulation parameters
 nExpMax = 1e7; % Maximum number of experiments per snrdB point
 nBlErrMax = 200; % Maximum number of errors to collect.
-modType = 'BPSK'; % Modulation type
 
 avBer = zeros(1, length(noiseVar));
 avBler = zeros(1, length(noiseVar));
