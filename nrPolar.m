@@ -9,8 +9,8 @@ clear;
 % Parameters from the Task Description
 R = 0.2389; % Effective code rate (r), R*E > 30
 E = 180; % Rate matched block length (n), E <= 8192
-snrdB = 1:0.2:2; % Signal-to-noise ratio, dB
-tx_max = 1; % Max number of retransmissions
+snrdB = -3.5:0.1:-3; % Signal-to-noise ratio, dB
+tx_max = 3; % Max number of retransmissions
 
 % Dependent parameters
 K = floor(R*E); % % Message length in bits, including CRC
@@ -28,8 +28,8 @@ poly = '24C'; % CRC polynom type; change in accordance to crcLen
 L = 8; % SCL decoding list size
 
 % Simulation parameters
-nExpMax = 1e5; % Maximum number of experiments per snrdB point
-nBlErrMax = 20; % Maximum number of errors to collect.
+nExpMax = 1e7; % Maximum number of experiments per snrdB point
+nBlErrMax = 200; % Maximum number of errors to collect.
 modType = 'BPSK'; % Modulation type
 
 avBer = zeros(1, length(noiseVar));
@@ -56,7 +56,7 @@ parfor ind = 1:length(noiseVar)
        N = length(encoded); % Full length of Polar codeword
        
        matched = nrRateMatchPolar(encoded,K,E); % Rate matching
-       modulated = nrSymbolModulate(matched,'QPSK'); % BPSK modulation
+       modulated = nrSymbolModulate(matched,'QPSK'); % modulation
        
        % Retransmission loop
        % A simplest form of HARQ scheme is implemented below: when got nack
@@ -99,4 +99,5 @@ end
 delete(pool);
 semilogy(snrdB, avBer);
 grid on;
-
+hold on;
+semilogy(snrdB, avBler);
